@@ -18,4 +18,13 @@ model User {
   points BigInt
 
   @@map("users")
+  Session Session[]
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  refreshToken String   @unique
+  expiresAt    DateTime
 }

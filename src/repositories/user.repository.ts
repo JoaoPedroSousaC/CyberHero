@@ -1,5 +1,6 @@
 import { prisma } from "../database/prisma-client";
 import { User, UserCreate, UserRepository, UserUpdate } from "../interfaces/users.interface";
+import { RegisterInput } from "../utils/jwt"
 
 class UserRepositoryPrisma implements UserRepository {
     async create(data: UserCreate): Promise<User> {
@@ -23,6 +24,28 @@ class UserRepositoryPrisma implements UserRepository {
 
     async delete(id: string): Promise<void> {
         await prisma.user.delete({ where: { id } });
+    }
+
+    async saveSession(userId: string, refreshToken: string, expiresAt: Date): Promise<void> {
+        await prisma.session.create({
+            data: {
+                userId,
+                refreshToken,
+                expiresAt,
+            },
+        })
+    }
+
+    async findSessionByToken(refreshToken: string): Promise<Session | null> {
+        return prisma.session.findUnique({ where: { refreshToken } })
+    }
+
+    async deleteSessionByToken(refreshToken: string): Promise<void> {
+        await prisma.session.delete({ where: { refreshToken } })
+    }
+
+    async deleteAllSessionsForUser(userId: string): Promise<void> {
+        await prisma.session.deleteMany({ where: { userId } })
     }
 }
 
