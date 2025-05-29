@@ -15,16 +15,68 @@ model User {
   name String
   email String @unique
   password String
-  points BigInt
+  totalpoints Int @default(0)
+  paypoints   Int @default(0)
+  doneQuiz String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
 
   @@map("users")
-  Session Session[]
 }
 
-model Session {
-  id           String   @id @default(uuid())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id])
-  refreshToken String   @unique
-  expiresAt    DateTime
+model Administrador {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+
+  @@map("Administrador")
+}
+
+model Jogo {
+  id String @id @default(uuid())
+  name String
+  descricao String
+  points Int @default(0)
+
+  @@map("Jogo")
+}
+
+model Medalha {
+  id String @id @default(uuid())
+  name String
+  descricao String
+  icon String
+
+  @@map("Medalha")
+}
+
+model ConteudoEducativo {
+  id String @id @default(uuid())
+  titulo String
+  texto String
+
+  @@map("ConteudoEducativo")
+}
+
+model ConteudoImagem {
+  id String @id @default(uuid())
+  url String
+
+  @@map("ConteudoImagem")
+}
+
+model Loja {
+  id String @id @default(uuid())
+  name String
+
+  @@map("Loja")
+}
+
+model MedalhaDisponivelNaLoja{
+  id String @id @default(uuid())
+  preco Int @default(0)
+
+  @@map("MedalhaDisponivelNaLoja")
 }

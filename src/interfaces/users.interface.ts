@@ -3,21 +3,29 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    points: bigint;
+    totalpoints: number;
+    paypoints: number;
+    doneQuiz: string[];
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface UserCreate {
     name: string;
     email: string;
     password: string;
-    points: bigint;
+    totalpoints?: number;
+    paypoints?: number;
+    doneQuiz?: string[];
 }
 
 export interface UserUpdate {
     name?: string;
     email?: string;
     password?: string;
-    points?: bigint;
+    totalpoints?: number;
+    paypoints?: number;
+    doneQuiz?: string[];
 }
 
 export interface UserRepository {
@@ -26,16 +34,4 @@ export interface UserRepository {
     get(id: string): Promise<User | null>;
     update(id: string, data: UserUpdate): Promise<User>;
     delete(id: string): Promise<void>;
-    saveSession(userId: string, refreshToken: string, expiresAt: Date): Promise<void>
-    findSessionByToken(refreshToken: string): Promise<Session | null>
-    deleteSessionByToken(refreshToken: string): Promise<void>
-    deleteAllSessionsForUser(userId: string): Promise<void>
 }
-
-export interface Session {
-    id: string
-    userId: string
-    refreshToken: string
-    expiresAt: Date
-}
-

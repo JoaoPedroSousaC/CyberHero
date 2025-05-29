@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.7.0",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.7.0",
+    "bcrypt": "^6.0.0",
     "fastify": "^5.3.3",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.0"

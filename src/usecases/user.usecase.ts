@@ -8,15 +8,26 @@ class UserUseCase {
         this.userRepository = new UserRepositoryPrisma();
     }
 
-    async create({ email, name, password, points }: UserCreate): Promise<User> {
+    async create({ email, name, password, totalpoints = 0, paypoints = 0, doneQuiz = [] }: UserCreate): Promise<User> {
         const exists = await this.userRepository.findByEmail(email);
         if (exists) throw new Error("User already exists");
 
-        return await this.userRepository.create({ email, name, password, points });
+        return await this.userRepository.create({
+            email,
+            name,
+            password,
+            totalpoints,
+            paypoints,
+            doneQuiz,
+        });
     }
 
     async get(id: string): Promise<User | null> {
         return await this.userRepository.get(id);
+    }
+
+    async getByEmail(email: string): Promise<User | null> {
+        return await this.userRepository.findByEmail(email);
     }
 
     async update(id: string, data: UserUpdate): Promise<User> {

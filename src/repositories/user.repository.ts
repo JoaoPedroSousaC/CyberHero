@@ -1,52 +1,63 @@
 import { prisma } from "../database/prisma-client";
 import { User, UserCreate, UserRepository, UserUpdate } from "../interfaces/users.interface";
-import { RegisterInput } from "../utils/jwt"
 
-class UserRepositoryPrisma implements UserRepository {
+export class UserRepositoryPrisma implements UserRepository {
     async create(data: UserCreate): Promise<User> {
-        return await prisma.user.create({ data });
+        const created = await prisma.user.create({
+            data: {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                totalpoints: data.totalpoints ?? 0,
+                paypoints: data.paypoints ?? 0,
+                doneQuiz: data.doneQuiz ?? [],
+            }
+        });
+
+        return this.mapToInterface(created);
     }
 
     async findByEmail(email: string): Promise<User | null> {
-        return await prisma.user.findFirst({ where: { email } });
+        const user = await prisma.user.findUnique({ where: { email } });
+        return user ? this.mapToInterface(user) : null;
     }
 
     async get(id: string): Promise<User | null> {
-        return await prisma.user.findUnique({ where: { id } });
+        const user = await prisma.user.findUnique({ where: { id } });
+        return user ? this.mapToInterface(user) : null;
     }
 
     async update(id: string, data: UserUpdate): Promise<User> {
-        return await prisma.user.update({
+        const updated = await prisma.user.update({
             where: { id },
-            data
+            data: {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                totalpoints: data.totalpoints,
+                paypoints: data.paypoints,
+                doneQuiz: data.doneQuiz,
+            }
         });
+
+        return this.mapToInterface(updated);
     }
 
     async delete(id: string): Promise<void> {
         await prisma.user.delete({ where: { id } });
     }
 
-    async saveSession(userId: string, refreshToken: string, expiresAt: Date): Promise<void> {
-        await prisma.session.create({
-            data: {
-                userId,
-                refreshToken,
-                expiresAt,
-            },
-        })
-    }
-
-    async findSessionByToken(refreshToken: string): Promise<Session | null> {
-        return prisma.session.findUnique({ where: { refreshToken } })
-    }
-
-    async deleteSessionByToken(refreshToken: string): Promise<void> {
-        await prisma.session.delete({ where: { refreshToken } })
-    }
-
-    async deleteAllSessionsForUser(userId: string): Promise<void> {
-        await prisma.session.deleteMany({ where: { userId } })
+    private mapToInterface(prismaUser: any): User {
+        return {
+            id: prismaUser.id,
+            name: prismaUser.name,
+            email: prismaUser.email,
+            password: prismaUser.password,
+            totalpoints: prismaUser.totalpoints,
+            paypoints: prismaUser.paypoints,
+            doneQuiz: prismaUser.doneQuiz,
+            createdAt: prismaUser.createdAt.toISOString(),
+            updatedAt: prismaUser.updatedAt.toISOString(),
+        };
     }
 }
-
-export { UserRepositoryPrisma };
