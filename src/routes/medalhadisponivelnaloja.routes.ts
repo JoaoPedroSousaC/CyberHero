@@ -3,7 +3,8 @@ import { MedalhaDisponivelNaLojaUseCase } from "../usecases/medalhadisponivelnal
 import { MedalhaDisponivelNaLojaCreate } from "../interfaces/medalhadisponivelnaloja.interface";
 
 export async function MedalhaDisponivelNaLojaRoutes(fastify: FastifyInstance) {
-    const MedalhaDisponivelNaLojaUseCase = new MedalhaDisponivelNaLojaUseCase();
+    const { MedalhaDisponivelNaLojaUseCase } = require('../usecases/medalhadisponivelnaloja.usecase');
+    const medalhadisponivelnaloja = new MedalhaDisponivelNaLojaUseCase();
 
     fastify.post<{ Body: MedalhaDisponivelNaLojaCreate }>("/", async (req, reply) => {
         const { preco } = req.body;
