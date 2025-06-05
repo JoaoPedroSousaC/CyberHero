@@ -37,16 +37,18 @@ const FormSection = ({ onSuccess }) => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3333/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: nomeAluno,
-          email: emailResponsavel,
-          password: senhaResponsavel,
-          points: 0,
-        }),
-      });
+  const response = await fetch("https://cyberhero-ht0h.onrender.com/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: nomeAluno,
+      email: emailResponsavel,
+      password: senhaResponsavel,
+      totalpoints: 0,
+      paypoints: 0,
+      doneQuiz: []
+    }),
+  });
 
       if (!response.ok) {
         const data = await response.json();
