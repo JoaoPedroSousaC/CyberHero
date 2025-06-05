@@ -49,11 +49,6 @@ app.register(MedalhaDisponivelNaLojaRoutes, {
     
 })
 
-const port = Number(process.env.PORT) || 3333;
-
-app.listen({
-  port,
-  host: '0.0.0.0'
-}, () => {
-  console.log(`server is running on port ${port}`);
+app.listen({ port: process.env.PORT || 10000, host: '0.0.0.0' }, () => {
+  console.log(`Server is running on port ${port}`);
 });
