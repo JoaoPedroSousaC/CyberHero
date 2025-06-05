@@ -12,6 +12,6 @@ export default defineConfig({
   shims: false,
   esbuildOptions(options) {
     options.external ||= [];
-    options.external.push('./generated/prisma/**', 'prisma', '@prisma/client');
+    options.external.push('./generated/prisma');
   }
 });
