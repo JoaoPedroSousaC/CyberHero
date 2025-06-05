@@ -1,5 +1,5 @@
-import { ConteudoImagem, ConteudoImagemCreate, ConteudoImagemUpdate, ConteudoImagemRepository} from "../interfaces/ConteudoImagem.interface";
-import { ConteudoImagemRepositoryPrisma } from "../repositories/ConteudoImagem.repository";
+import { ConteudoImagem, ConteudoImagemCreate, ConteudoImagemUpdate, ConteudoImagemRepository} from "../interfaces/conteudoimagem.interface";
+import { ConteudoImagemRepositoryPrisma } from "../repositories/conteudoimagem.repository";
 
 class ConteudoImagemUseCase {
     private ConteudoImagemRepository: ConteudoImagemRepository;

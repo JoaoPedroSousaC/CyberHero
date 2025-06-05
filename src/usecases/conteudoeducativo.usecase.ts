@@ -1,5 +1,5 @@
-import { ConteudoEducativo, ConteudoEducativoCreate, ConteudoEducativoUpdate, ConteudoEducativoRepository} from "../interfaces/ConteudoEducativo.interface";
-import { ConteudoEducativoRepositoryPrisma } from "../repositories/ConteudoEducativo.repository";
+import { ConteudoEducativo, ConteudoEducativoCreate, ConteudoEducativoUpdate, ConteudoEducativoRepository} from "../interfaces/conteudoeducativo.interface";
+import { ConteudoEducativoRepositoryPrisma } from "../repositories/conteudoeducativo.repository";
 
 class ConteudoEducativoUseCase {
     private ConteudoEducativoRepository: ConteudoEducativoRepository;

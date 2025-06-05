@@ -1,5 +1,5 @@
-import { Loja, LojaCreate, LojaUpdate, LojaRepository} from "../interfaces/Loja.interface";
-import { LojaRepositoryPrisma } from "../repositories/Loja.repository";
+import { Loja, LojaCreate, LojaUpdate, LojaRepository} from "../interfaces/loja.interface";
+import { LojaRepositoryPrisma } from "../repositories/loja.repository";
 
 class LojaUseCase {
     private LojaRepository: LojaRepository;

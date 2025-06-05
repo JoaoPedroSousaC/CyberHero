@@ -1,5 +1,5 @@
-import { MedalhaDisponivelNaLoja, MedalhaDisponivelNaLojaCreate, MedalhaDisponivelNaLojaUpdate, MedalhaDisponivelNaLojaRepository} from "../interfaces/MedalhaDisponivelNaLoja.interface";
-import { MedalhaDisponivelNaLojaRepositoryPrisma } from "../repositories/MedalhaDisponivelNaLoja.repository";
+import { MedalhaDisponivelNaLoja, MedalhaDisponivelNaLojaCreate, MedalhaDisponivelNaLojaUpdate, MedalhaDisponivelNaLojaRepository} from "../interfaces/medalhadisponivelnaloja.interface";
+import { MedalhaDisponivelNaLojaRepositoryPrisma } from "../repositories/medalhadisponivelnaloja.repository";
 
 class MedalhaDisponivelNaLojaUseCase {
     private MedalhaDisponivelNaLojaRepository: MedalhaDisponivelNaLojaRepository;

@@ -1,5 +1,5 @@
-import { Jogo, JogoCreate, JogoUpdate, JogoRepository} from "../interfaces/Jogo.interface";
-import { JogoRepositoryPrisma } from "../repositories/Jogo.repository";
+import { Jogo, JogoCreate, JogoUpdate, JogoRepository} from "../interfaces/jogo.interface";
+import { JogoRepositoryPrisma } from "../repositories/jogo.repository";
 
 class JogoUseCase {
     private JogoRepository: JogoRepository;

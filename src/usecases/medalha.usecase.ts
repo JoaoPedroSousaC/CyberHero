@@ -1,5 +1,5 @@
-import { Medalha, MedalhaCreate, MedalhaUpdate, MedalhaRepository} from "../interfaces/Medalha.interface";
-import { MedalhaRepositoryPrisma } from "../repositories/Medalha.repository";
+import { Medalha, MedalhaCreate, MedalhaUpdate, MedalhaRepository} from "../interfaces/medalha.interface";
+import { MedalhaRepositoryPrisma } from "../repositories/medalha.repository";
 
 class MedalhaUseCase {
     private MedalhaRepository: MedalhaRepository;
