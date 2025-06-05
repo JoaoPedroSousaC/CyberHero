@@ -1,11 +1,11 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/server.ts'],
-  format: ['cjs'],
-  target: 'es2020',
   outDir: 'dist',
+  target: 'es2020',
+  format: ['cjs'],
+  splitting: false,
   clean: true,
   dts: true,
-  exclude: ['src/generated/**'],
-})
+});
