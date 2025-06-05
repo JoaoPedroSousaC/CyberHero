@@ -1,12 +1,12 @@
 import fastify, { FastifyInstance } from "fastify";
 import { userRoutes } from "./routes/user.routes";
 import { administradorRoutes } from "./routes/administrador.routes";
-import { jogoRoutes } from "./routes/jogo.routes";
-import { conteudoeducativoRoutes } from "./routes/conteudoeducativo.routes";
-import { conteudoimagemRoutes } from "./routes/conteudoimagem.routes";
-import { lojaRoutes } from "./routes/loja.routes";
-import { medalhaRoutes} from "./routes/medalha.routes";
-import { medalhadisponivelnalojaRoutes} from "./routes/medalhadisponivelnaloja.routes";
+import { JogoRoutes } from "./routes/jogo.routes";
+import { ConteudoEducativoRoutes } from "./routes/conteudoeducativo.routes";
+import { ConteudoImagemRoutes } from "./routes/conteudoimagem.routes";
+import { LojaRoutes } from "./routes/loja.routes";
+import { MedalhaRoutes } from "./routes/medalha.routes";
+import { MedalhaDisponivelNaLojaRoutes } from "./routes/medalhadisponivelnaloja.routes";
 const app: FastifyInstance = fastify({})
 
 app.register(userRoutes, {
@@ -19,32 +19,32 @@ app.register(administradorRoutes, {
     
 })
 
-app.register( jogoRoutes, {
+app.register( JogoRoutes, {
     prefix: '/jogo',
     
 })
 
-app.register(conteudoeducativoRoutes, {
+app.register(ConteudoEducativoRoutes, {
     prefix: '/conteudoeducativo',
     
 })
 
-app.register(conteudoimagemRoutes, {
+app.register(ConteudoImagemRoutes, {
     prefix: '/conteudoimagem',
     
 })
 
-app.register(lojaRoutes, {
+app.register(LojaRoutes, {
     prefix: '/loja',
     
 })
 
-app.register(medalhaRoutes, {
+app.register(MedalhaRoutes, {
     prefix: '/medalha',
     
 })
 
-app.register(medalhadisponivelnalojaRoutes, {
+app.register(MedalhaDisponivelNaLojaRoutes, {
     prefix: '/medalhadisponivelnaloja',
     
 })
