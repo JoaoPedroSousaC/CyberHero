@@ -3,9 +3,11 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: ['src/server.ts'],
   outDir: 'dist',
-  target: 'node20',
-  clean: true,
+  splitting: false,
   sourcemap: true,
-  dts: false,
-  skipNodeModulesBundle: true,
+  clean: true,
+  target: 'node20',
+  format: ['cjs'],
+  dts: true,
+  exclude: ['src/generated/**/*', '**/*.prisma', '**/*.d.ts', '**/*.node'],
 });

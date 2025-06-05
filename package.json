@@ -1,15 +1,15 @@
 {
   "name": "cyberhero(1)",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
+  "main": "dist/server.js",
+  "type": "dist/server.d.ts",
   "engines": {
     "node": "22.15.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src",
+    "build": "tsup src/server.ts",
     "start": "node dist/server.js"
   },
   "keywords": [],
