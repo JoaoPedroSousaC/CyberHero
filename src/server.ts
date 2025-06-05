@@ -1,6 +1,4 @@
 import fastify, { FastifyInstance } from "fastify";
-import dotenv from "dotenv";
-
 import { userRoutes } from "./routes/user.routes";
 import { administradorRoutes } from "./routes/administrador.routes";
 import { JogoRoutes } from "./routes/jogo.routes";
@@ -9,30 +7,51 @@ import { ConteudoImagemRoutes } from "./routes/conteudoimagem.routes";
 import { LojaRoutes } from "./routes/loja.routes";
 import { MedalhaRoutes } from "./routes/medalha.routes";
 import { MedalhaDisponivelNaLojaRoutes } from "./routes/medalhadisponivelnaloja.routes";
+const app: FastifyInstance = fastify({})
 
-// Carrega variáveis do .env
-dotenv.config();
+app.register(userRoutes, {
+    prefix: '/users',
+    
+})
 
-const app: FastifyInstance = fastify({});
+app.register(administradorRoutes, {
+    prefix: '/administrador',
+    
+})
 
-// Registro de rotas
-app.register(userRoutes, { prefix: '/users' });
-app.register(administradorRoutes, { prefix: '/administrador' });
-app.register(JogoRoutes, { prefix: '/jogo' });
-app.register(ConteudoEducativoRoutes, { prefix: '/conteudoeducativo' });
-app.register(ConteudoImagemRoutes, { prefix: '/conteudoimagem' });
-app.register(LojaRoutes, { prefix: '/loja' });
-app.register(MedalhaRoutes, { prefix: '/medalha' });
-app.register(MedalhaDisponivelNaLojaRoutes, { prefix: '/medalhadisponivelnaloja' });
+app.register( JogoRoutes, {
+    prefix: '/jogo',
+    
+})
 
-// Define porta do Render ou local
-const port = parseInt(process.env.PORT || "3333");
+app.register(ConteudoEducativoRoutes, {
+    prefix: '/conteudoeducativo',
+    
+})
 
-// Start do servidor - necessário host: "0.0.0.0" no Render
-app.listen({ port, host: "0.0.0.0" }, (err, address) => {
-  if (err) {
-    console.error("Erro ao iniciar o servidor:", err);
-    process.exit(1);
-  }
-  console.log(`🚀 Server is running at ${address}`);
+app.register(ConteudoImagemRoutes, {
+    prefix: '/conteudoimagem',
+    
+})
+
+app.register(LojaRoutes, {
+    prefix: '/loja',
+    
+})
+
+app.register(MedalhaRoutes, {
+    prefix: '/medalha',
+    
+})
+
+app.register(MedalhaDisponivelNaLojaRoutes, {
+    prefix: '/medalhadisponivelnaloja',
+    
+})
+
+const PORT = process.env.PORT || 3000;
+
+app.listen({
+  port: Number(process.env.PORT) || 3000,
+  host: '0.0.0.0'
 });
