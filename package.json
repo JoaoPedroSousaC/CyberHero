@@ -2,6 +2,7 @@
   "name": "cyberhero(1)",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "types": "dist/server.d.ts",
   "engines": {
     "node": "22.15.0"
