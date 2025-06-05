@@ -49,12 +49,9 @@ app.register(MedalhaDisponivelNaLojaRoutes, {
     
 })
 
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3333;
+const PORT = process.env.PORT || 3000;
 
-app.listen({ port: port }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Server is running on port ${port}`);
+app.listen({
+  port: Number(process.env.PORT) || 3000,
+  host: '0.0.0.0'
 });
