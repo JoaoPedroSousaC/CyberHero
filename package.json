@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch cyberhero/src/server.ts",
-    "build": "tsup cyberhero/src/server.ts --out-dir dist --format cjs",
+    "build": "tsup",
     "start": "node dist/server.js"
   },
   "keywords": [],
