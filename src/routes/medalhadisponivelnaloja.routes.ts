@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { MedalhaDisponivelNaLojaUseCase } from "../usecases/MedalhaDisponivelNaLoja.usecase";
+import { MedalhaDisponivelNaLojaUseCase } from "../usecases/medalhadisponivelnaloja.usecase";
 import { MedalhaDisponivelNaLojaCreate } from "../interfaces/MedalhaDisponivelNaLoja.interface";
 
 export async function MedalhaDisponivelNaLojaRoutes(fastify: FastifyInstance) {

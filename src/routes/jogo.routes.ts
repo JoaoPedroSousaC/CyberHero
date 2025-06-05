@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { JogoUseCase } from "../usecases/Jogo.usecase";
+import { JogoUseCase } from "../usecases/jogo.usecase";
 import { JogoCreate } from "../interfaces/Jogo.interface";
 
 export async function JogoRoutes(fastify: FastifyInstance) {

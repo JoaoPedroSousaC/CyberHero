@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { ConteudoEducativoUseCase } from "../usecases/ConteudoEducativo.usecase";
+import { ConteudoEducativoUseCase } from "../usecases/conteudoeducativo.usecase";
 import { ConteudoEducativoCreate } from "../interfaces/ConteudoEducativo.interface";
 
 export async function ConteudoEducativoRoutes(fastify: FastifyInstance) {
