@@ -1,5 +1,5 @@
 {
-  "name": "cyberhero(1)",
+  "name": "cyberhero",
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",
@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsup --watch",
-    "build": "tsup",
+    "dev": "tsx watch cyberhero/src/server.ts",
+    "build": "tsup cyberhero/src/server.ts --out-dir dist --format cjs",
     "start": "node dist/server.js"
   },
   "keywords": [],
