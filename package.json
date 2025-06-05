@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src/server.ts --out-dir dist",
+    "build": "tsup src",
     "start": "node dist/server.js"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.29",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.7.0",
     "tsup": "^8.5.0",
