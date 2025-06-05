@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { MedalhaUseCase } from "../usecases/medalha.usecase";
-import { MedalhaCreate } from "../interfaces/Medalha.interface";
+import { MedalhaCreate } from "../interfaces/medalha.interface";
 
 export async function MedalhaRoutes(fastify: FastifyInstance) {
     const MedalhaUseCase = new MedalhaUseCase();

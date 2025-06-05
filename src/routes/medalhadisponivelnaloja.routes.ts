@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { MedalhaDisponivelNaLojaUseCase } from "../usecases/medalhadisponivelnaloja.usecase";
-import { MedalhaDisponivelNaLojaCreate } from "../interfaces/MedalhaDisponivelNaLoja.interface";
+import { MedalhaDisponivelNaLojaCreate } from "../interfaces/medalhadisponivelnaloja.interface";
 
 export async function MedalhaDisponivelNaLojaRoutes(fastify: FastifyInstance) {
     const MedalhaDisponivelNaLojaUseCase = new MedalhaDisponivelNaLojaUseCase();

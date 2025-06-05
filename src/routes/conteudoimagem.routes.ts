@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { ConteudoImagemUseCase } from "../usecases/conteudoimagem.usecase";
-import { ConteudoImagemCreate } from "../interfaces/ConteudoImagem.interface";
+import { ConteudoImagemCreate } from "../interfaces/conteudoimagem.interface";
 
 export async function ConteudoImagemRoutes(fastify: FastifyInstance) {
     const ConteudoImagemUseCase = new ConteudoImagemUseCase();

@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { LojaUseCase } from "../usecases/loja.usecase";
-import { LojaCreate } from "../interfaces/Loja.interface";
+import { LojaCreate } from "../interfaces/loja.interface";
 
 export async function LojaRoutes(fastify: FastifyInstance) {
     const LojaUseCase = new LojaUseCase();
