@@ -9,9 +9,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch cyberhero/src/server.ts",
+    "dev": "tsup --watch",
     "build": "tsup",
-    "start": "node dist/server.cjs"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
