@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  totalpoints Int @default(0)
+  paypoints   Int @default(0)
+  doneQuiz String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
+
+  @@map("users")
+}
+
+model Administrador {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+
+  @@map("Administrador")
+}
+
+model Jogo {
+  id String @id @default(uuid())
+  name String
+  descricao String
+  points Int @default(0)
+
+  @@map("Jogo")
+}
+
+model Medalha {
+  id String @id @default(uuid())
+  name String
+  descricao String
+  icon String
+
+  @@map("Medalha")
+}
+
+model ConteudoEducativo {
+  id String @id @default(uuid())
+  titulo String
+  texto String
+
+  @@map("ConteudoEducativo")
+}
+
+model ConteudoImagem {
+  id String @id @default(uuid())
+  url String
+
+  @@map("ConteudoImagem")
+}
+
+model Loja {
+  id String @id @default(uuid())
+  name String
+
+  @@map("Loja")
+}
+
+model MedalhaDisponivelNaLoja{
+  id String @id @default(uuid())
+  preco Int @default(0)
+
+  @@map("MedalhaDisponivelNaLoja")
+}
