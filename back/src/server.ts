@@ -7,6 +7,7 @@ import { ConteudoImagemRoutes } from "./routes/conteudoimagem.routes";
 import { LojaRoutes } from "./routes/loja.routes";
 import { MedalhaRoutes } from "./routes/medalha.routes";
 import { MedalhaDisponivelNaLojaRoutes } from "./routes/medalhadisponivelnaloja.routes";
+import cors from '@fastify/cors'
 const app: FastifyInstance = fastify({})
 
 app.register(userRoutes, {
@@ -51,7 +52,13 @@ app.register(MedalhaDisponivelNaLojaRoutes, {
 
 const PORT = process.env.PORT || 3000;
 
+app.register(cors, {
+    origin: '*'
+});
+
 app.listen({
   port: Number(process.env.PORT) || 3000,
   host: '0.0.0.0'
+}, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

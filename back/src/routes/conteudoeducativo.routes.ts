@@ -3,7 +3,7 @@ import { ConteudoEducativoUseCase } from "../usecases/conteudoeducativo.usecase"
 import { ConteudoEducativoCreate } from "../interfaces/conteudoeducativo.interface";
 
 export async function ConteudoEducativoRoutes(fastify: FastifyInstance) {
-    const { ConteudoEducativoUseCase } = require('../usecases/conteudoeducativo.usecase');
+    // const { ConteudoEducativoUseCase } = require('../usecases/conteudoeducativo.usecase');
     const conteudoeducativo = new ConteudoEducativoUseCase();
 
     fastify.post<{ Body: ConteudoEducativoCreate }>("/", async (req, reply) => {

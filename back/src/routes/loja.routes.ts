@@ -3,7 +3,7 @@ import { LojaUseCase } from "../usecases/loja.usecase";
 import { LojaCreate } from "../interfaces/loja.interface";
 
 export async function LojaRoutes(fastify: FastifyInstance) {
-    const { LojaUseCase } = require('../usecases/loja.usecase');
+    // const { LojaUseCase } = require('../usecases/loja.usecase');
     const loja = new LojaUseCase();
 
     fastify.post<{ Body: LojaCreate }>("/", async (req, reply) => {

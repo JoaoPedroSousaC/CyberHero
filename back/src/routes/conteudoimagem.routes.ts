@@ -3,7 +3,7 @@ import { ConteudoImagemUseCase } from "../usecases/conteudoimagem.usecase";
 import { ConteudoImagemCreate } from "../interfaces/conteudoimagem.interface";
 
 export async function ConteudoImagemRoutes(fastify: FastifyInstance) {
-    const { ConteudoImagemUseCase } = require('../usecases/conteudoimagem.usecase');
+    // const { ConteudoImagemUseCase } = require('../usecases/conteudoimagem.usecase');
     const conteudoimagem = new ConteudoImagemUseCase();
 
     fastify.post<{ Body: ConteudoImagemCreate }>("/", async (req, reply) => {
