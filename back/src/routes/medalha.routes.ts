@@ -3,7 +3,6 @@ import { MedalhaUseCase } from "../usecases/medalha.usecase";
 import { MedalhaCreate } from "../interfaces/medalha.interface";
 
 export async function MedalhaRoutes(fastify: FastifyInstance) {
-    const { MedalhaUseCase } = require('../usecases/medalha.usecase');
     const medalha = new MedalhaUseCase();
 
     fastify.post<{ Body: MedalhaCreate }>("/", async (req, reply) => {

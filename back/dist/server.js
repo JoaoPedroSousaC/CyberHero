@@ -1,9 +1,33 @@
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+
 // src/server.ts
-import fastify from "fastify";
+var import_fastify = __toESM(require("fastify"));
 
 // src/database/prisma-client.ts
-import { PrismaClient } from "@prisma/client";
-var prisma = new PrismaClient();
+var import_client = require("@prisma/client");
+var prisma = new import_client.PrismaClient();
 
 // src/repositories/user.repository.ts
 var UserRepositoryPrisma = class {
@@ -96,8 +120,8 @@ var UserUseCase = class {
 };
 
 // src/routes/user.routes.ts
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+var import_bcrypt = __toESM(require("bcrypt"));
+var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 async function userRoutes(fastify2) {
   const userUseCase = new UserUseCase();
   fastify2.post("/", async (req, reply) => {
@@ -107,7 +131,7 @@ async function userRoutes(fastify2) {
       if (existingUser) {
         return reply.status(400).send({ error: "User already exists" });
       }
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await import_bcrypt.default.hash(password, 10);
       const data = await userUseCase.create({
         name,
         email,
@@ -128,11 +152,11 @@ async function userRoutes(fastify2) {
       if (!user) {
         return reply.status(401).send({ error: "Invalid email or password" });
       }
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await import_bcrypt.default.compare(password, user.password);
       if (!passwordMatch) {
         return reply.status(401).send({ error: "Invalid email or password" });
       }
-      const token = jwt.sign(
+      const token = import_jsonwebtoken.default.sign(
         { userId: user.id, email: user.email },
         process.env.JWT_SECRET || "supersecretkey",
         { expiresIn: "1h" }
@@ -250,8 +274,8 @@ var AdministradorUseCase = class {
 };
 
 // src/routes/administrador.routes.ts
-import bcrypt2 from "bcrypt";
-import jwt2 from "jsonwebtoken";
+var import_bcrypt2 = __toESM(require("bcrypt"));
+var import_jsonwebtoken2 = __toESM(require("jsonwebtoken"));
 async function administradorRoutes(fastify2) {
   const administradorUseCase = new AdministradorUseCase();
   fastify2.post("/", async (req, reply) => {
@@ -261,7 +285,7 @@ async function administradorRoutes(fastify2) {
       if (existingAdministrador) {
         return reply.status(400).send({ error: "Administrador already exists" });
       }
-      const hashedPassword = await bcrypt2.hash(password, 10);
+      const hashedPassword = await import_bcrypt2.default.hash(password, 10);
       const data = await administradorUseCase.create({
         name,
         email,
@@ -279,11 +303,11 @@ async function administradorRoutes(fastify2) {
       if (!administrador) {
         return reply.status(401).send({ error: "Invalid email or password" });
       }
-      const passwordMatch = await bcrypt2.compare(password, administrador.password);
+      const passwordMatch = await import_bcrypt2.default.compare(password, administrador.password);
       if (!passwordMatch) {
         return reply.status(401).send({ error: "Invalid email or password" });
       }
-      const token = jwt2.sign(
+      const token = import_jsonwebtoken2.default.sign(
         { administradorId: administrador.id, email: administrador.email },
         process.env.JWT_SECRET || "supersecretkey",
         { expiresIn: "1h" }
@@ -322,9 +346,87 @@ async function administradorRoutes(fastify2) {
   });
 }
 
+// src/repositories/jogo.repository.ts
+var JogoRepositoryPrisma = class {
+  async create(data) {
+    const created = await prisma.Jogo.create({
+      data: {
+        name: data.name,
+        descricao: data.descricao,
+        points: data.points
+      }
+    });
+    return this.mapToInterface(created);
+  }
+  async findByName(Name) {
+    const jogo = await prisma.jogo.findUnique({ where: { Name } });
+    return jogo ? this.mapToInterface(jogo) : null;
+  }
+  async get(id) {
+    const Jogo = await prisma.jogo.findUnique({ where: { id } });
+    return Jogo ? this.mapToInterface(Jogo) : null;
+  }
+  async update(id, data) {
+    const updated = await prisma.Jogo.update({
+      where: { id },
+      data: {
+        name: data.name,
+        descricao: data.descricao,
+        points: data.points
+      }
+    });
+    return this.mapToInterface(updated);
+  }
+  async delete(id) {
+    await prisma.Jogo.delete({ where: { id } });
+  }
+  mapToInterface(prismaJogo) {
+    return {
+      id: prismaJogo.id,
+      name: prismaJogo.name,
+      descricao: prismaJogo.descricao,
+      points: prismaJogo.points,
+      createdAt: prismaJogo.createdAt.toISOString(),
+      updatedAt: prismaJogo.updatedAt.toISOString()
+    };
+  }
+};
+
+// src/usecases/jogo.usecase.ts
+var JogoUseCase = class {
+  constructor() {
+    this.JogoRepository = new JogoRepositoryPrisma();
+  }
+  async create({ descricao, name, points }) {
+    const exists = await this.JogoRepository.findByName(name);
+    if (exists) throw new Error("Jogo already exists");
+    return await this.JogoRepository.create({
+      descricao,
+      name,
+      points
+    });
+  }
+  async get(id) {
+    return await this.JogoRepository.get(id);
+  }
+  async getByName(name) {
+    return await this.JogoRepository.findByName(name);
+  }
+  async update(id, data) {
+    const Jogo = await this.JogoRepository.get(id);
+    if (!Jogo) throw new Error("Jogo not found");
+    return await this.JogoRepository.update(id, data);
+  }
+  async delete(id) {
+    const Jogo = await this.JogoRepository.get(id);
+    if (!Jogo) throw new Error("Jogo not found");
+    await this.JogoRepository.delete(id);
+  }
+};
+
 // src/routes/jogo.routes.ts
 async function JogoRoutes(fastify2) {
-  const JogoUseCase = new JogoUseCase();
+  const jogo = new JogoUseCase();
   fastify2.post("/", async (req, reply) => {
     const { name, descricao, points } = req.body;
     try {
@@ -376,9 +478,87 @@ async function JogoRoutes(fastify2) {
   });
 }
 
+// src/repositories/conteudoeducativo.repository.ts
+var ConteudoEducativoRepositoryPrisma = class {
+  async create(data) {
+    const created = await prisma.ConteudoEducativo.create({
+      data: {
+        name: data.name,
+        titulo: data.titulo,
+        texto: data.texto
+      }
+    });
+    return this.mapToInterface(created);
+  }
+  async findByTitulo(Titulo) {
+    const conteudoeducativo = await prisma.conteudoeducativo.findUnique({ where: { Titulo } });
+    return conteudoeducativo ? this.mapToInterface(conteudoeducativo) : null;
+  }
+  async get(id) {
+    const ConteudoEducativo = await prisma.conteudoeducativo.findUnique({ where: { id } });
+    return ConteudoEducativo ? this.mapToInterface(ConteudoEducativo) : null;
+  }
+  async update(id, data) {
+    const updated = await prisma.ConteudoEducativo.update({
+      where: { id },
+      data: {
+        name: data.name,
+        titulo: data.titulo,
+        texto: data.texto
+      }
+    });
+    return this.mapToInterface(updated);
+  }
+  async delete(id) {
+    await prisma.ConteudoEducativo.delete({ where: { id } });
+  }
+  mapToInterface(prismaConteudoEducativo) {
+    return {
+      id: prismaConteudoEducativo.id,
+      name: prismaConteudoEducativo.name,
+      titulo: prismaConteudoEducativo.titulo,
+      texto: prismaConteudoEducativo.texto,
+      createdAt: prismaConteudoEducativo.createdAt.toISOString(),
+      updatedAt: prismaConteudoEducativo.updatedAt.toISOString()
+    };
+  }
+};
+
+// src/usecases/conteudoeducativo.usecase.ts
+var ConteudoEducativoUseCase = class {
+  constructor() {
+    this.ConteudoEducativoRepository = new ConteudoEducativoRepositoryPrisma();
+  }
+  async create({ titulo, name, texto }) {
+    const exists = await this.ConteudoEducativoRepository.findByTitulo(titulo);
+    if (exists) throw new Error("ConteudoEducativo already exists");
+    return await this.ConteudoEducativoRepository.create({
+      titulo,
+      name,
+      texto
+    });
+  }
+  async get(id) {
+    return await this.ConteudoEducativoRepository.get(id);
+  }
+  async getBytitulo(titulo) {
+    return await this.ConteudoEducativoRepository.findByTitulo(titulo);
+  }
+  async update(id, data) {
+    const ConteudoEducativo = await this.ConteudoEducativoRepository.get(id);
+    if (!ConteudoEducativo) throw new Error("ConteudoEducativo not found");
+    return await this.ConteudoEducativoRepository.update(id, data);
+  }
+  async delete(id) {
+    const ConteudoEducativo = await this.ConteudoEducativoRepository.get(id);
+    if (!ConteudoEducativo) throw new Error("ConteudoEducativo not found");
+    await this.ConteudoEducativoRepository.delete(id);
+  }
+};
+
 // src/routes/conteudoeducativo.routes.ts
 async function ConteudoEducativoRoutes(fastify2) {
-  const ConteudoEducativoUseCase = new ConteudoEducativoUseCase();
+  const conteudoeducativo = new ConteudoEducativoUseCase();
   fastify2.post("/", async (req, reply) => {
     const { name, titulo, texto } = req.body;
     try {
@@ -430,13 +610,83 @@ async function ConteudoEducativoRoutes(fastify2) {
   });
 }
 
+// src/repositories/conteudoimagem.repository.ts
+var ConteudoImagemRepositoryPrisma = class {
+  async create(data) {
+    const created = await prisma.ConteudoImagem.create({
+      data: {
+        url: data.url
+      }
+    });
+    return this.mapToInterface(created);
+  }
+  async findByUrl(Id) {
+    const conteudoimagem = await prisma.conteudoimagem.findUnique({ where: { Url } });
+    return conteudoimagem ? this.mapToInterface(conteudoimagem) : null;
+  }
+  async get(id) {
+    const ConteudoImagem = await prisma.conteudoimagem.findUnique({ where: { id } });
+    return ConteudoImagem ? this.mapToInterface(ConteudoImagem) : null;
+  }
+  async update(id, data) {
+    const updated = await prisma.ConteudoImagem.update({
+      where: { id },
+      data: {
+        url: data.url
+      }
+    });
+    return this.mapToInterface(updated);
+  }
+  async delete(id) {
+    await prisma.ConteudoImagem.delete({ where: { id } });
+  }
+  mapToInterface(prismaConteudoImagem) {
+    return {
+      id: prismaConteudoImagem.id,
+      url: prismaConteudoImagem.url,
+      createdAt: prismaConteudoImagem.createdAt.toISOString(),
+      updatedAt: prismaConteudoImagem.updatedAt.toISOString()
+    };
+  }
+};
+
+// src/usecases/conteudoimagem.usecase.ts
+var ConteudoImagemUseCase = class {
+  constructor() {
+    this.ConteudoImagemRepository = new ConteudoImagemRepositoryPrisma();
+  }
+  async create({ url: url2 }) {
+    const exists = await this.ConteudoImagemRepository.findByUrl(url2);
+    if (exists) throw new Error("ConteudoImagem already exists");
+    return await this.ConteudoImagemRepository.create({
+      url: url2
+    });
+  }
+  async get(id) {
+    return await this.ConteudoImagemRepository.get(id);
+  }
+  async getBytitulo(titulo) {
+    return await this.ConteudoImagemRepository.findByUrl(url);
+  }
+  async update(id, data) {
+    const ConteudoImagem = await this.ConteudoImagemRepository.get(id);
+    if (!ConteudoImagem) throw new Error("ConteudoImagem not found");
+    return await this.ConteudoImagemRepository.update(id, data);
+  }
+  async delete(id) {
+    const ConteudoImagem = await this.ConteudoImagemRepository.get(id);
+    if (!ConteudoImagem) throw new Error("ConteudoImagem not found");
+    await this.ConteudoImagemRepository.delete(id);
+  }
+};
+
 // src/routes/conteudoimagem.routes.ts
 async function ConteudoImagemRoutes(fastify2) {
-  const ConteudoImagemUseCase = new ConteudoImagemUseCase();
+  const conteudoimagem = new ConteudoImagemUseCase();
   fastify2.post("/", async (req, reply) => {
-    const { url } = req.body;
+    const { url: url2 } = req.body;
     try {
-      const existingConteudoImagem = await ConteudoImagemUseCase.getByUrl(url);
+      const existingConteudoImagem = await ConteudoImagemUseCase.getByUrl(url2);
       if (existingConteudoImagem) {
         return reply.status(400).send({ error: "ConteudoImagem already exists" });
       }
@@ -484,9 +734,79 @@ async function ConteudoImagemRoutes(fastify2) {
   });
 }
 
+// src/repositories/loja.repository.ts
+var LojaRepositoryPrisma = class {
+  async create(data) {
+    const created = await prisma.Loja.create({
+      data: {
+        name: data.name
+      }
+    });
+    return this.mapToInterface(created);
+  }
+  async findByName(Name) {
+    const loja = await prisma.loja.findUnique({ where: { Name } });
+    return loja ? this.mapToInterface(loja) : null;
+  }
+  async get(id) {
+    const Loja = await prisma.loja.findUnique({ where: { id } });
+    return Loja ? this.mapToInterface(Loja) : null;
+  }
+  async update(id, data) {
+    const updated = await prisma.Loja.update({
+      where: { id },
+      data: {
+        name: data.name
+      }
+    });
+    return this.mapToInterface(updated);
+  }
+  async delete(id) {
+    await prisma.Loja.delete({ where: { id } });
+  }
+  mapToInterface(prismaLoja) {
+    return {
+      id: prismaLoja.id,
+      name: prismaLoja.name,
+      createdAt: prismaLoja.createdAt.toISOString(),
+      updatedAt: prismaLoja.updatedAt.toISOString()
+    };
+  }
+};
+
+// src/usecases/loja.usecase.ts
+var LojaUseCase = class {
+  constructor() {
+    this.LojaRepository = new LojaRepositoryPrisma();
+  }
+  async create({ name }) {
+    const exists = await this.LojaRepository.findByName(name);
+    if (exists) throw new Error("Loja already exists");
+    return await this.LojaRepository.create({
+      name
+    });
+  }
+  async get(id) {
+    return await this.LojaRepository.get(id);
+  }
+  async getByName(name) {
+    return await this.LojaRepository.findByName(name);
+  }
+  async update(id, data) {
+    const Loja = await this.LojaRepository.get(id);
+    if (!Loja) throw new Error("Loja not found");
+    return await this.LojaRepository.update(id, data);
+  }
+  async delete(id) {
+    const Loja = await this.LojaRepository.get(id);
+    if (!Loja) throw new Error("Loja not found");
+    await this.LojaRepository.delete(id);
+  }
+};
+
 // src/routes/loja.routes.ts
 async function LojaRoutes(fastify2) {
-  const LojaUseCase = new LojaUseCase();
+  const loja = new LojaUseCase();
   fastify2.post("/", async (req, reply) => {
     const { name } = req.body;
     try {
@@ -538,9 +858,87 @@ async function LojaRoutes(fastify2) {
   });
 }
 
+// src/repositories/medalha.repository.ts
+var MedalhaRepositoryPrisma = class {
+  async create(data) {
+    const created = await prisma.Medalha.create({
+      data: {
+        name: data.name,
+        descricao: data.descricao,
+        icon: data.icon
+      }
+    });
+    return this.mapToInterface(created);
+  }
+  async findByDescricao(Descricao) {
+    const medalha = await prisma.medalha.findUnique({ where: { Descricao } });
+    return medalha ? this.mapToInterface(medalha) : null;
+  }
+  async get(id) {
+    const Medalha = await prisma.medalha.findUnique({ where: { id } });
+    return Medalha ? this.mapToInterface(Medalha) : null;
+  }
+  async update(id, data) {
+    const updated = await prisma.Medalha.update({
+      where: { id },
+      data: {
+        name: data.name,
+        descricao: data.descricao,
+        icon: data.icon
+      }
+    });
+    return this.mapToInterface(updated);
+  }
+  async delete(id) {
+    await prisma.Medalha.delete({ where: { id } });
+  }
+  mapToInterface(prismaMedalha) {
+    return {
+      id: prismaMedalha.id,
+      name: prismaMedalha.name,
+      descricao: prismaMedalha.descricao,
+      icon: prismaMedalha.icon,
+      createdAt: prismaMedalha.createdAt.toISOString(),
+      updatedAt: prismaMedalha.updatedAt.toISOString()
+    };
+  }
+};
+
+// src/usecases/medalha.usecase.ts
+var MedalhaUseCase = class {
+  constructor() {
+    this.MedalhaRepository = new MedalhaRepositoryPrisma();
+  }
+  async create({ descricao, name, icon }) {
+    const exists = await this.MedalhaRepository.findByDescricao(descricao);
+    if (exists) throw new Error("Medalha already exists");
+    return await this.MedalhaRepository.create({
+      descricao,
+      name,
+      icon
+    });
+  }
+  async get(id) {
+    return await this.MedalhaRepository.get(id);
+  }
+  async getBydescricao(descricao) {
+    return await this.MedalhaRepository.findByDescricao(descricao);
+  }
+  async update(id, data) {
+    const Medalha = await this.MedalhaRepository.get(id);
+    if (!Medalha) throw new Error("Medalha not found");
+    return await this.MedalhaRepository.update(id, data);
+  }
+  async delete(id) {
+    const Medalha = await this.MedalhaRepository.get(id);
+    if (!Medalha) throw new Error("Medalha not found");
+    await this.MedalhaRepository.delete(id);
+  }
+};
+
 // src/routes/medalha.routes.ts
 async function MedalhaRoutes(fastify2) {
-  const MedalhaUseCase = new MedalhaUseCase();
+  const medalha = new MedalhaUseCase();
   fastify2.post("/", async (req, reply) => {
     const { name, descricao, icon } = req.body;
     try {
@@ -592,9 +990,79 @@ async function MedalhaRoutes(fastify2) {
   });
 }
 
+// src/repositories/medalhadisponivelnaloja.repository.ts
+var MedalhaDisponivelNaLojaRepositoryPrisma = class {
+  async create(data) {
+    const created = await prisma.MedalhaDisponivelNaLoja.create({
+      data: {
+        preco: data.preco
+      }
+    });
+    return this.mapToInterface(created);
+  }
+  async findByName(Name) {
+    const medalhadisponivelnaloja = await prisma.medalhadisponivelnaloja.findUnique({ where: { Name } });
+    return medalhadisponivelnaloja ? this.mapToInterface(medalhadisponivelnaloja) : null;
+  }
+  async get(id) {
+    const MedalhaDisponivelNaLoja = await prisma.medalhadisponivelnaloja.findUnique({ where: { id } });
+    return MedalhaDisponivelNaLoja ? this.mapToInterface(MedalhaDisponivelNaLoja) : null;
+  }
+  async update(id, data) {
+    const updated = await prisma.MedalhaDisponivelNaLoja.update({
+      where: { id },
+      data: {
+        preco: data.preco
+      }
+    });
+    return this.mapToInterface(updated);
+  }
+  async delete(id) {
+    await prisma.MedalhaDisponivelNaLoja.delete({ where: { id } });
+  }
+  mapToInterface(prismaMedalhaDisponivelNaLoja) {
+    return {
+      id: prismaMedalhaDisponivelNaLoja.id,
+      preco: prismaMedalhaDisponivelNaLoja.preco,
+      createdAt: prismaMedalhaDisponivelNaLoja.createdAt.toISOString(),
+      updatedAt: prismaMedalhaDisponivelNaLoja.updatedAt.toISOString()
+    };
+  }
+};
+
+// src/usecases/medalhadisponivelnaloja.usecase.ts
+var MedalhaDisponivelNaLojaUseCase = class {
+  constructor() {
+    this.MedalhaDisponivelNaLojaRepository = new MedalhaDisponivelNaLojaRepositoryPrisma();
+  }
+  async create({ preco }) {
+    const exists = await this.MedalhaDisponivelNaLojaRepository.findByPreco(preco);
+    if (exists) throw new Error("MedalhaDisponivelNaLoja already exists");
+    return await this.MedalhaDisponivelNaLojaRepository.create({
+      preco
+    });
+  }
+  async get(id) {
+    return await this.MedalhaDisponivelNaLojaRepository.get(id);
+  }
+  async getByPreco(preco) {
+    return await this.MedalhaDisponivelNaLojaRepository.findByPreco(preco);
+  }
+  async update(id, data) {
+    const MedalhaDisponivelNaLoja = await this.MedalhaDisponivelNaLojaRepository.get(id);
+    if (!MedalhaDisponivelNaLoja) throw new Error("MedalhaDisponivelNaLoja not found");
+    return await this.MedalhaDisponivelNaLojaRepository.update(id, data);
+  }
+  async delete(id) {
+    const MedalhaDisponivelNaLoja = await this.MedalhaDisponivelNaLojaRepository.get(id);
+    if (!MedalhaDisponivelNaLoja) throw new Error("MedalhaDisponivelNaLoja not found");
+    await this.MedalhaDisponivelNaLojaRepository.delete(id);
+  }
+};
+
 // src/routes/medalhadisponivelnaloja.routes.ts
 async function MedalhaDisponivelNaLojaRoutes(fastify2) {
-  const MedalhaDisponivelNaLojaUseCase = new MedalhaDisponivelNaLojaUseCase();
+  const medalhadisponivelnaloja = new MedalhaDisponivelNaLojaUseCase();
   fastify2.post("/", async (req, reply) => {
     const { preco } = req.body;
     try {
@@ -647,7 +1115,8 @@ async function MedalhaDisponivelNaLojaRoutes(fastify2) {
 }
 
 // src/server.ts
-var app = fastify({});
+var import_cors = __toESM(require("@fastify/cors"));
+var app = (0, import_fastify.default)({});
 app.register(userRoutes, {
   prefix: "/users"
 });
@@ -672,12 +1141,14 @@ app.register(MedalhaRoutes, {
 app.register(MedalhaDisponivelNaLojaRoutes, {
   prefix: "/medalhadisponivelnaloja"
 });
-var port = process.env.PORT ? parseInt(process.env.PORT) : 3333;
-app.listen({ port }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Server is running on port ${port}`);
+var PORT = process.env.PORT || 3e3;
+app.register(import_cors.default, {
+  origin: "*"
+});
+app.listen({
+  port: Number(process.env.PORT) || 3e3,
+  host: "0.0.0.0"
+}, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 //# sourceMappingURL=server.js.map
