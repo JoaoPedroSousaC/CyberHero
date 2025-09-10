@@ -3,7 +3,6 @@ import { JogoUseCase } from "../usecases/jogo.usecase";
 import { JogoCreate } from "../interfaces/jogo.interface";
 
 export async function JogoRoutes(fastify: FastifyInstance) {
-    // const { JogoUseCase } = require('../usecases/jogo.usecase');
     const jogo = new JogoUseCase();
 
     fastify.post<{ Body: JogoCreate }>("/", async (req, reply) => {
